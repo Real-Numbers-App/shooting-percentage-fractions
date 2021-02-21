@@ -343,6 +343,60 @@ export const DragAndDrop = () => {
           checkForCorrectAnswer(25, 50)
         }
       }
+
+      if (overDragTarget(rect3, x, y)) {    
+        // This logic below is crazy. We shoudn't need to hold a temp value;
+        const checkForCorrectAnswer = (min, max) => {
+          if (tempSolutionArray.filter(item => item.playerName === formatData().playerName).length == 0) {
+            tempSolutionArray.push(formatData(min,max));
+          } else {
+            const newArray = tempSolutionArray.map(item => {
+              if (item.playerName == formatData(min,max).playerName) {
+                return {
+                  ...item,
+                  correct: d3.select(this).data()[0].player.playerStats[0].fieldGoals.fgPct >= min && d3.select(this).data()[0].player.playerStats[0].fieldGoals.fgPct < max
+                }
+              } else {
+                return item;
+              }
+            })
+            tempSolutionArray = newArray;
+          }
+          setSolutionArray(tempSolutionArray)
+        }
+
+        if (overDragTarget(rect3, x, y)) {
+          checkForCorrectAnswer(50, 75)
+        }
+      }
+
+      if (overDragTarget(rect4, x, y)) {    
+        // This logic below is crazy. We shoudn't need to hold a temp value;
+        const checkForCorrectAnswer = (min, max) => {
+          if (tempSolutionArray.filter(item => item.playerName === formatData().playerName).length == 0) {
+            tempSolutionArray.push(formatData(min,max));
+          } else {
+            const newArray = tempSolutionArray.map(item => {
+              if (item.playerName == formatData(min,max).playerName) {
+                return {
+                  ...item,
+                  correct: d3.select(this).data()[0].player.playerStats[0].fieldGoals.fgPct >= min && d3.select(this).data()[0].player.playerStats[0].fieldGoals.fgPct < max
+                }
+              } else {
+                return item;
+              }
+            })
+            tempSolutionArray = newArray;
+          }
+          setSolutionArray(tempSolutionArray)
+        }
+
+        if (overDragTarget(rect4, x, y)) {
+          checkForCorrectAnswer(75, 101)
+        }
+      }
+
+
     }
 
     circleGroup.select("circle")
@@ -359,6 +413,32 @@ export const DragAndDrop = () => {
       point.x <= rect.x + rect.width &&
       point.y <= rect.y + rect.height
     );
+  }
+
+  function checkResponse(array) {
+    const length = data.stats.away.players.concat(data.stats.home.players).filter(item => item.playerStats[0].fieldGoals.fgAtt > 5).length;
+    let correct = true;
+    let correctArray = [];
+
+    array.forEach(item => {
+      if (item.correct === false) {
+        correct = false;
+      } else {
+        return;
+      }
+    })
+
+    array.forEach(item => {
+      if (item.correct === true) {
+        correctArray.push(item);
+      }
+    })
+
+    if (array.length === length && correct) {
+      alert('SUCCESS!!!!')
+    } else {
+      alert(`You have ${correctArray.length} / ${length} correct!`)
+    }
   }
 
   // Part 2
@@ -480,9 +560,10 @@ export const DragAndDrop = () => {
     <div>
       <button onClick={() => {
         console.log(solutionArray)
+        checkResponse(solutionArray);
         // setLevel(prev => prev + 1);
         // organizeCirclesPt2();
-      }}>go to next</button>
+      }}>Check Answer</button>
       <svg ref={ref} />
     </div>
   );

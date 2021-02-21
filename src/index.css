@@ -11,3 +11,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body{
+	background: #222;
+	color: white;
+	/*width: 1000px;*/
+	text-align: left;
+  margin: 0 auto;
+}
+
+circle.dragging { filter: url(#shadow) }
+rect { fill: none; stroke: #59b4cb; stroke-width: 2; }
+rect.dropTarget { stroke-width: 5; fill: #444; }
+
+.axis {
+  fill: white;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+  stroke-width: 1px;
+}
+.domain {
+  fill: white;
+}
+.tick {
+  font-size: 20px;
+  color: white;
+}
